@@ -34,10 +34,10 @@ const Navbar = () => {
 
         {/* User Actions */}
         <div className="hidden md:flex items-center gap-2">
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="hover:bg-wanderlust-blue hover:text-white hover:border-wanderlust-blue">
             Sign In
           </Button>
-          <Button size="sm" className="bg-wanderlust-blue hover:bg-wanderlust-blue-dark text-white">
+          <Button size="sm" className="bg-wanderlust-blue hover:bg-wanderlust-orange text-white">
             Get Started
           </Button>
         </div>
@@ -81,10 +81,10 @@ const Navbar = () => {
               About
             </Link>
             <div className="flex flex-col space-y-2 pt-2 border-t border-gray-100">
-              <Button variant="outline" size="sm" className="justify-center">
+              <Button variant="outline" size="sm" className="justify-center hover:bg-wanderlust-blue hover:text-white hover:border-wanderlust-blue">
                 Sign In
               </Button>
-              <Button size="sm" className="bg-wanderlust-blue hover:bg-wanderlust-blue-dark text-white justify-center">
+              <Button size="sm" className="bg-wanderlust-blue hover:bg-wanderlust-orange text-white justify-center">
                 Get Started
               </Button>
             </div>

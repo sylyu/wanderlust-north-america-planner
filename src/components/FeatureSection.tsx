@@ -1,10 +1,10 @@
 
-import { Airplane, Car, Hotel, Map, Calendar } from "lucide-react";
+import { Plane, Car, Hotel, Map, Calendar } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const features = [
   {
-    icon: <Airplane className="h-10 w-10 text-wanderlust-blue" />,
+    icon: <Plane className="h-10 w-10 text-wanderlust-blue" />,
     title: "Flight Coordination",
     description: "Find and book flights from multiple departure cities to one destination"
   },

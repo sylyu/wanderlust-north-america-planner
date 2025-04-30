@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, Airplane, Car, Hotel, Calendar } from "lucide-react";
+import { Check, Plane, Car, Hotel, Calendar } from "lucide-react";
 
 const HowItWorks = () => {
   const [activeTab, setActiveTab] = useState("create");
@@ -115,7 +115,7 @@ const HowItWorks = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-start gap-2">
-                    <Airplane className="h-5 w-5 text-wanderlust-blue mt-0.5" />
+                    <Plane className="h-5 w-5 text-wanderlust-blue mt-0.5" />
                     <p>Book flights from multiple origins to one destination</p>
                   </div>
                   <div className="flex items-start gap-2">

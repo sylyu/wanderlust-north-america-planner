@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <Compass className="h-6 w-6 text-wanderlust-blue" />
-              <span className="text-xl font-semibold text-white">Wanderlust</span>
+              <span className="text-xl font-semibold text-white">Wanderlust.AI</span>
             </Link>
             <p className="text-sm mb-4">
               Making it easy to coordinate group trips with travelers from different cities across North America.
@@ -66,7 +66,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-800 mt-12 pt-6 text-sm text-center md:text-left md:flex md:justify-between">
-          <p>© {new Date().getFullYear()} Wanderlust. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Wanderlust.AI. All rights reserved.</p>
           <div className="mt-4 md:mt-0">
             <span>United States 🇺🇸</span> | <span>Canada 🇨🇦</span> | <span>Mexico 🇲🇽</span>
           </div>

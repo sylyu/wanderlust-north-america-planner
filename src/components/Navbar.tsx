@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <Compass className="h-6 w-6 text-wanderlust-blue" />
-          <span className="text-xl font-semibold text-wanderlust-charcoal">Wanderlust</span>
+          <span className="text-xl font-semibold text-wanderlust-charcoal">Wanderlust.AI</span>
         </Link>
 
         {/* Desktop Navigation */}

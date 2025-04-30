@@ -68,7 +68,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-12 pt-6 text-sm text-center md:text-left md:flex md:justify-between">
           <p>© {new Date().getFullYear()} Wanderlust. All rights reserved.</p>
           <div className="mt-4 md:mt-0">
-            <span>United States 🇺🇸</span> | <span>Canada 🇨🇦</span>
+            <span>United States 🇺🇸</span> | <span>Canada 🇨🇦</span> | <span>Mexico 🇲🇽</span>
           </div>
         </div>
       </div>

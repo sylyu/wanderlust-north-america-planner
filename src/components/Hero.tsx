@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Search, Calendar, Map } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -92,9 +91,14 @@ const Hero = () => {
                       value={searchInput}
                       onChange={(e) => {
                         setSearchInput(e.target.value);
+                        // Ensure dropdown is open when typing
                         if (e.target.value && !open) {
                           setOpen(true);
                         }
+                      }}
+                      onClick={(e) => {
+                        // Prevent the popover from closing when clicking the input
+                        e.stopPropagation();
                       }}
                       onFocus={() => {
                         if (searchInput) {
@@ -104,8 +108,18 @@ const Hero = () => {
                     />
                   </div>
                 </PopoverTrigger>
-                <PopoverContent className="w-[300px] p-0" align="start">
+                <PopoverContent className="w-[300px] p-0" align="start" onInteractOutside={(e) => {
+                  // Keep popover open during interactions with suggestions
+                  e.preventDefault();
+                }}>
                   <Command>
+                    <CommandInput 
+                      placeholder="Search airports..."
+                      className="h-9"
+                      // This is hidden but helps maintain component structure
+                      value={searchInput}
+                      onValueChange={setSearchInput}
+                    />
                     <CommandList className="max-h-[300px] overflow-y-auto">
                       <CommandEmpty>No airports found</CommandEmpty>
                       {filteredAirports.length > 0 && (

@@ -47,7 +47,7 @@ const airports = [
 const Hero = () => {
   const [searchInput, setSearchInput] = useState("");
   const [date, setDate] = useState<Date | undefined>(undefined);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   // Filter airports based on input
   const filteredAirports = airports.filter(
@@ -65,7 +65,7 @@ const Hero = () => {
 
   const handleAirportSelect = (airport: typeof airports[0]) => {
     setSearchInput(`${airport.city} (${airport.code})`);
-    setIsSearchOpen(false);
+    setOpen(false);
   };
 
   return (
@@ -81,7 +81,7 @@ const Hero = () => {
         <div className="bg-white p-4 rounded-lg shadow-lg max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row gap-3">
             <div className="relative flex-grow">
-              <Popover open={isSearchOpen && filteredAirports.length > 0} onOpenChange={setIsSearchOpen}>
+              <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                   <div className="relative w-full">
                     <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
@@ -90,8 +90,17 @@ const Hero = () => {
                       placeholder="Where to? City or airport code"
                       className="pl-10 py-6 text-black"
                       value={searchInput}
-                      onChange={(e) => setSearchInput(e.target.value)}
-                      onFocus={() => setIsSearchOpen(true)}
+                      onChange={(e) => {
+                        setSearchInput(e.target.value);
+                        if (e.target.value && !open) {
+                          setOpen(true);
+                        }
+                      }}
+                      onFocus={() => {
+                        if (searchInput) {
+                          setOpen(true);
+                        }
+                      }}
                     />
                   </div>
                 </PopoverTrigger>
@@ -99,18 +108,20 @@ const Hero = () => {
                   <Command>
                     <CommandList className="max-h-[300px] overflow-y-auto">
                       <CommandEmpty>No airports found</CommandEmpty>
-                      <CommandGroup heading="Airports">
-                        {filteredAirports.map((airport) => (
-                          <CommandItem
-                            key={airport.code}
-                            onSelect={() => handleAirportSelect(airport)}
-                            className="flex flex-col items-start py-2"
-                          >
-                            <div className="font-medium">{airport.city} ({airport.code})</div>
-                            <div className="text-xs text-gray-500 truncate max-w-full">{airport.name}</div>
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
+                      {filteredAirports.length > 0 && (
+                        <CommandGroup heading="Airports">
+                          {filteredAirports.map((airport) => (
+                            <CommandItem
+                              key={airport.code}
+                              onSelect={() => handleAirportSelect(airport)}
+                              className="flex flex-col items-start py-2"
+                            >
+                              <div className="font-medium">{airport.city} ({airport.code})</div>
+                              <div className="text-xs text-gray-500 truncate max-w-full">{airport.name}</div>
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      )}
                     </CommandList>
                   </Command>
                 </PopoverContent>

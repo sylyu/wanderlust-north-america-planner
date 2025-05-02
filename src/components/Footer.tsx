@@ -14,7 +14,7 @@ const Footer = () => {
               <span className="text-xl font-semibold text-white">Wanderlust.AI</span>
             </Link>
             <p className="text-sm mb-4">
-              Making it easy to coordinate group trips with travelers from different cities across North America.
+              Helps you coordinate group trips with travelers from different cities across North America.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="hover:text-white transition-colors">

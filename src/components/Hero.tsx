@@ -6,10 +6,44 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { format } from "date-fns";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+
+// Sample popular destinations
+const popularDestinations = [
+  "New York City",
+  "Tokyo",
+  "Paris",
+  "London",
+  "Rome",
+  "Barcelona",
+  "Sydney",
+  "Bangkok",
+  "Bali",
+  "Santorini",
+  "Maui",
+  "Cancún",
+  "San Francisco",
+  "Yellowstone National Park",
+  "Grand Canyon",
+];
 
 const Hero = () => {
   const [searchInput, setSearchInput] = useState("");
   const [date, setDate] = useState<Date | undefined>(undefined);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // Filter destinations based on input
+  const filteredDestinations = popularDestinations.filter(
+    (destination) => 
+      searchInput && destination.toLowerCase().includes(searchInput.toLowerCase())
+  );
 
   return (
     <section className="hero-section w-full h-[600px] flex flex-col justify-center items-center text-white px-4">
@@ -24,14 +58,41 @@ const Hero = () => {
         <div className="bg-white p-4 rounded-lg shadow-lg max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row gap-3">
             <div className="relative flex-grow">
-              <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Where to? (City, Park, Region)"
-                className="pl-10 py-6 text-black"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-              />
+              <Popover open={isSearchOpen && filteredDestinations.length > 0} onOpenChange={setIsSearchOpen}>
+                <PopoverTrigger asChild>
+                  <div className="relative w-full">
+                    <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                    <Input
+                      type="text"
+                      placeholder="Where to?"
+                      className="pl-10 py-6 text-black"
+                      value={searchInput}
+                      onChange={(e) => setSearchInput(e.target.value)}
+                      onFocus={() => setIsSearchOpen(true)}
+                    />
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="w-[300px] p-0" align="start">
+                  <Command>
+                    <CommandList>
+                      <CommandEmpty>No destinations found</CommandEmpty>
+                      <CommandGroup heading="Popular Destinations">
+                        {filteredDestinations.map((destination) => (
+                          <CommandItem
+                            key={destination}
+                            onSelect={(value) => {
+                              setSearchInput(value);
+                              setIsSearchOpen(false);
+                            }}
+                          >
+                            {destination}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </div>
             
             <Popover>

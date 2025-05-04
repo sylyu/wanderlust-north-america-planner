@@ -9,25 +9,25 @@ import CTASection from "../components/CTASection";
 import Footer from "../components/Footer";
 
 const Index = () => {
-  // Create a ref for the bottom section
-  const bottomSectionRef = useRef<HTMLDivElement>(null);
+  // Create a ref for the destinations section
+  const destinationSectionRef = useRef<HTMLDivElement>(null);
 
-  // Function to scroll to the bottom section
-  const scrollToBottom = () => {
-    bottomSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  // Function to scroll to the destinations section
+  const scrollToDestinations = () => {
+    destinationSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <div className="flex-grow">
-        <Hero onSeePopulationsClick={scrollToBottom} />
+        <Hero onSeePopulationsClick={scrollToDestinations} />
         <FeatureSection />
-        <DestinationSection />
-        <HowItWorks />
-        <div ref={bottomSectionRef}>
-          <CTASection />
+        <div ref={destinationSectionRef}>
+          <DestinationSection />
         </div>
+        <HowItWorks />
+        <CTASection />
       </div>
       <Footer />
     </div>

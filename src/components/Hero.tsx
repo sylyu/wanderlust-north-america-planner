@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Search, MapPin } from "lucide-react";
@@ -70,7 +71,7 @@ const Hero = ({ onSeePopulationsClick }: HeroProps) => {
               onClick={onSeePopulationsClick} 
               className="bg-wanderlust-orange hover:bg-wanderlust-orange/90 text-white"
             >
-              See Populations
+              See Popular Destinations
             </Button>
           </div>
 

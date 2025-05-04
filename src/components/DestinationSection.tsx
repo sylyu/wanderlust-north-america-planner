@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const destinations = [
   {
@@ -41,6 +42,7 @@ const destinations = [
 
 const DestinationSection = () => {
   const [sortBy, setSortBy] = useState("recommended");
+  const navigate = useNavigate();
   
   // This would be more sophisticated in a real implementation
   const sortedDestinations = [...destinations].sort((a, b) => {
@@ -50,6 +52,10 @@ const DestinationSection = () => {
     // Just return default order for now
     return 0;
   });
+
+  const handleViewAllClick = () => {
+    navigate('/destinations');
+  };
 
   return (
     <section className="py-16 px-4">
@@ -119,7 +125,10 @@ const DestinationSection = () => {
         </div>
 
         <div className="mt-10 text-center">
-          <Button className="bg-wanderlust-blue hover:bg-wanderlust-blue-dark text-white">
+          <Button 
+            className="bg-wanderlust-blue hover:bg-wanderlust-blue-dark text-white"
+            onClick={handleViewAllClick}
+          >
             View All Destinations
           </Button>
         </div>

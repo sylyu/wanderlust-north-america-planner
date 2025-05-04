@@ -1,4 +1,5 @@
 
+import { useRef } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import FeatureSection from "../components/FeatureSection";
@@ -8,15 +9,25 @@ import CTASection from "../components/CTASection";
 import Footer from "../components/Footer";
 
 const Index = () => {
+  // Create a ref for the bottom section
+  const bottomSectionRef = useRef<HTMLDivElement>(null);
+
+  // Function to scroll to the bottom section
+  const scrollToBottom = () => {
+    bottomSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <div className="flex-grow">
-        <Hero />
+        <Hero onSeePopulationsClick={scrollToBottom} />
         <FeatureSection />
         <DestinationSection />
         <HowItWorks />
-        <CTASection />
+        <div ref={bottomSectionRef}>
+          <CTASection />
+        </div>
       </div>
       <Footer />
     </div>

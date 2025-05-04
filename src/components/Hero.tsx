@@ -1,183 +1,114 @@
-import { useState } from "react";
-import { Search, Calendar, Map } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import { format } from "date-fns";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
+import { Search, MapPin } from "lucide-react";
 
-// Sample airports with codes
-const airports = [
-  { city: "New York", code: "JFK", name: "John F. Kennedy International Airport" },
-  { city: "New York", code: "LGA", name: "LaGuardia Airport" },
-  { city: "Los Angeles", code: "LAX", name: "Los Angeles International Airport" },
-  { city: "Chicago", code: "ORD", name: "O'Hare International Airport" },
-  { city: "London", code: "LHR", name: "London Heathrow Airport" },
-  { city: "Paris", code: "CDG", name: "Charles de Gaulle Airport" },
-  { city: "Tokyo", code: "HND", name: "Tokyo Haneda Airport" },
-  { city: "Tokyo", code: "NRT", name: "Narita International Airport" },
-  { city: "Sydney", code: "SYD", name: "Sydney Airport" },
-  { city: "Dubai", code: "DXB", name: "Dubai International Airport" },
-  { city: "Singapore", code: "SIN", name: "Singapore Changi Airport" },
-  { city: "Hong Kong", code: "HKG", name: "Hong Kong International Airport" },
-  { city: "Amsterdam", code: "AMS", name: "Amsterdam Airport Schiphol" },
-  { city: "Frankfurt", code: "FRA", name: "Frankfurt Airport" },
-  { city: "Seoul", code: "ICN", name: "Incheon International Airport" },
-  { city: "Bangkok", code: "BKK", name: "Suvarnabhumi Airport" },
-  { city: "San Francisco", code: "SFO", name: "San Francisco International Airport" },
-  { city: "Munich", code: "MUC", name: "Munich Airport" },
-  { city: "Barcelona", code: "BCN", name: "Barcelona–El Prat Airport" },
-  { city: "Rome", code: "FCO", name: "Leonardo da Vinci–Fiumicino Airport" },
-  { city: "Miami", code: "MIA", name: "Miami International Airport" },
-  { city: "Toronto", code: "YYZ", name: "Toronto Pearson International Airport" },
-  { city: "Bali", code: "DPS", name: "Ngurah Rai International Airport" },
-  { city: "Madrid", code: "MAD", name: "Adolfo Suárez Madrid–Barajas Airport" },
-  { city: "Cancún", code: "CUN", name: "Cancún International Airport" },
-];
+interface HeroProps {
+  onSeePopulationsClick?: () => void;
+}
 
-const Hero = () => {
-  const [searchInput, setSearchInput] = useState("");
-  const [date, setDate] = useState<Date | undefined>(undefined);
-  const [open, setOpen] = useState(false);
+const Hero = ({ onSeePopulationsClick }: HeroProps) => {
+  const [location, setLocation] = useState("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
-  // Filter airports based on input
-  const filteredAirports = airports.filter(
-    (airport) => {
-      if (!searchInput) return false;
-      
-      const searchLower = searchInput.toLowerCase();
-      return (
-        airport.city.toLowerCase().includes(searchLower) ||
-        airport.code.toLowerCase().includes(searchLower) ||
-        airport.name.toLowerCase().includes(searchLower)
+  useEffect(() => {
+    // Simulate fetching location suggestions (replace with actual API call)
+    const locations = [
+      "New York, USA",
+      "London, UK",
+      "Paris, France",
+      "Tokyo, Japan",
+      "Sydney, Australia",
+    ];
+
+    if (location) {
+      const filteredSuggestions = locations.filter((loc) =>
+        loc.toLowerCase().startsWith(location.toLowerCase())
       );
+      setSuggestions(filteredSuggestions);
+    } else {
+      setSuggestions([]);
     }
-  );
+  }, [location]);
 
-  const handleAirportSelect = (airport: typeof airports[0]) => {
-    setSearchInput(`${airport.city} (${airport.code})`);
-    setOpen(false);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocation(e.target.value);
+  };
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setLocation(suggestion);
+    setSuggestions([]);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(`Searching for: ${location}`);
+    searchInputRef.current?.blur();
   };
 
   return (
-    <section className="hero-section w-full h-[600px] flex flex-col justify-center items-center text-white px-4">
-      <div className="max-w-5xl w-full text-center animate-fade-in">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-          Plan Group Trips <span className="text-wanderlust-orange">Together</span>
-        </h1>
-        <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-          Coordinate flights, hotels, cars, and activities for multiple people coming from different locations
-        </p>
-        
-        <div className="bg-white p-4 rounded-lg shadow-lg max-w-4xl mx-auto">
-          <div className="flex flex-col md:flex-row gap-3">
-            <div className="relative flex-grow">
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
-                  <div className="relative w-full">
-                    <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                    <Input
-                      type="text"
-                      placeholder="Where to? City or airport code"
-                      className="pl-10 py-6 text-black"
-                      value={searchInput}
-                      onChange={(e) => {
-                        setSearchInput(e.target.value);
-                        // Ensure dropdown is open when typing
-                        if (e.target.value && !open) {
-                          setOpen(true);
-                        }
-                      }}
-                      onClick={(e) => {
-                        // Prevent the popover from closing when clicking the input
-                        e.stopPropagation();
-                      }}
-                      onFocus={() => {
-                        if (searchInput) {
-                          setOpen(true);
-                        }
-                      }}
-                    />
-                  </div>
-                </PopoverTrigger>
-                <PopoverContent className="w-[300px] p-0" align="start" onInteractOutside={(e) => {
-                  // Keep popover open during interactions with suggestions
-                  e.preventDefault();
-                }}>
-                  <Command>
-                    <CommandInput 
-                      placeholder="Search airports..."
-                      className="h-9"
-                      // This is hidden but helps maintain component structure
-                      value={searchInput}
-                      onValueChange={setSearchInput}
-                    />
-                    <CommandList className="max-h-[300px] overflow-y-auto">
-                      <CommandEmpty>No airports found</CommandEmpty>
-                      {filteredAirports.length > 0 && (
-                        <CommandGroup heading="Airports">
-                          {filteredAirports.map((airport) => (
-                            <CommandItem
-                              key={airport.code}
-                              onSelect={() => handleAirportSelect(airport)}
-                              className="flex flex-col items-start py-2"
-                            >
-                              <div className="font-medium">{airport.city} ({airport.code})</div>
-                              <div className="text-xs text-gray-500 truncate max-w-full">{airport.name}</div>
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      )}
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-            </div>
-            
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="outline" className="h-12 border px-4 text-gray-600 flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>{date ? format(date, "MMM dd, yyyy") : "Select dates"}</span>
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <CalendarComponent
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  initialFocus
-                  captionLayout="dropdown-buttons"
-                  fromYear={2024}
-                  toYear={2030}
-                />
-              </PopoverContent>
-            </Popover>
-            
-            <Button className="h-12 bg-wanderlust-blue hover:bg-wanderlust-blue-dark text-white">
-              Search Destinations
+    <div className="relative min-h-[80vh] flex items-center justify-center bg-gray-900 text-white overflow-hidden">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url(/hero-bg.jpg)" }}
+      >
+        <div className="absolute inset-0 bg-black/40"></div>
+      </div>
+
+      <div className="container mx-auto px-4 z-10 py-16">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            Discover Your Next Group Adventure
+          </h1>
+          <p className="text-lg mb-8">
+            Plan your perfect trip with friends and family. Find destinations,
+            compare prices, and book everything in one place.
+          </p>
+
+          <div className="flex justify-center mt-8">
+            <Button 
+              onClick={onSeePopulationsClick} 
+              className="bg-wanderlust-orange hover:bg-wanderlust-orange/90 text-white"
+            >
+              See Populations
             </Button>
           </div>
-        </div>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Button variant="outline" className="bg-black/30 text-white border-white hover:bg-wanderlust-blue hover:bg-opacity-70">
-            <Map className="mr-2 h-4 w-4" /> Create Group Trip
-          </Button>
-          <Button variant="outline" className="bg-black/30 text-white border-white hover:bg-wanderlust-blue hover:bg-opacity-70">
-            See Popular Destinations
-          </Button>
+          <form onSubmit={handleSubmit} className="mt-12 relative">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Enter a destination"
+                value={location}
+                onChange={handleInputChange}
+                ref={searchInputRef}
+                className="w-full px-4 py-3 rounded-md text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-wanderlust-orange"
+              />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-wanderlust-orange hover:bg-wanderlust-orange/90 text-white px-4 py-2 rounded-md focus:outline-none"
+              >
+                <Search className="h-5 w-5" />
+              </button>
+            </div>
+            {suggestions.length > 0 && (
+              <ul className="absolute left-0 right-0 bg-white text-black rounded-md shadow-md mt-2">
+                {suggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  >
+                    <MapPin className="inline-block h-4 w-4 mr-2" />
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </form>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

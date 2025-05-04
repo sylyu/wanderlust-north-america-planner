@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Destinations from "./pages/Destinations";
 
+// Create a ref that can be accessed throughout the app
 const queryClient = new QueryClient();
 
 const App = () => (

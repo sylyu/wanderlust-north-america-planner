@@ -3,15 +3,10 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import RegionTabs from "../components/destinations/RegionTabs";
-import DestinationGrid from "../components/destinations/DestinationGrid";
 import { destinations } from "../data/destinations";
 
 const Destinations = () => {
   const [activeRegion, setActiveRegion] = useState<string>("all");
-  
-  const filteredDestinations = activeRegion === "all" 
-    ? destinations 
-    : destinations.filter(dest => dest.region === activeRegion);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -30,8 +25,8 @@ const Destinations = () => {
           <RegionTabs 
             activeRegion={activeRegion} 
             onRegionChange={setActiveRegion}
+            destinations={destinations} 
           />
-          <DestinationGrid destinations={filteredDestinations} />
         </div>
       </div>
       <Footer />

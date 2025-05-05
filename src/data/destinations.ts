@@ -3,7 +3,7 @@ export const destinations = [
   {
     id: 1,
     name: "Cancun",
-    image: "https://images.unsplash.com/photo-1552074284-5e84be0adfbb?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1512813389649-acb9131ced20?q=80&w=1000&auto=format&fit=crop",
     description: "Beautiful beaches and vibrant nightlife in Mexico",
     region: "North America",
     rating: 4.8,
@@ -59,7 +59,7 @@ export const destinations = [
   {
     id: 8,
     name: "South Korea",
-    image: "https://images.unsplash.com/photo-1538485399081-7a66562fd2f5?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1517154421773-0529f29ea451?q=80&w=1000&auto=format&fit=crop",
     description: "Vibrant cities and rich cultural heritage",
     region: "Asia",
     rating: 4.6,

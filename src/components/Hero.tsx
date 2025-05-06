@@ -2,6 +2,9 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Search, MapPin } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { destinations } from "../data/destinations";
+import { toast } from "sonner";
 
 interface HeroProps {
   onSeePopulationsClick?: () => void;
@@ -11,21 +14,16 @@ const Hero = ({ onSeePopulationsClick }: HeroProps) => {
   const [location, setLocation] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Simulate fetching location suggestions (replace with actual API call)
-    const locations = [
-      "New York, USA",
-      "London, UK",
-      "Paris, France",
-      "Tokyo, Japan",
-      "Sydney, Australia",
-    ];
-
+    // Filter destinations based on user input
     if (location) {
-      const filteredSuggestions = locations.filter((loc) =>
-        loc.toLowerCase().startsWith(location.toLowerCase())
-      );
+      const filteredSuggestions = destinations
+        .filter((dest) =>
+          dest.name.toLowerCase().includes(location.toLowerCase())
+        )
+        .map((dest) => dest.name);
       setSuggestions(filteredSuggestions);
     } else {
       setSuggestions([]);
@@ -43,8 +41,23 @@ const Hero = ({ onSeePopulationsClick }: HeroProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Searching for: ${location}`);
+    searchDestination(location);
     searchInputRef.current?.blur();
+  };
+
+  const searchDestination = (searchTerm: string) => {
+    // Find the destination that matches the search term
+    const foundDestination = destinations.find(
+      (dest) => dest.name.toLowerCase() === searchTerm.toLowerCase()
+    );
+
+    if (foundDestination) {
+      toast.success(`Found "${foundDestination.name}"! Redirecting...`);
+      // Navigate to the destinations page with a search parameter
+      navigate(`/destinations?search=${encodeURIComponent(searchTerm)}`);
+    } else {
+      toast.error("Destination not found. Please try a different location.");
+    }
   };
 
   return (
@@ -93,7 +106,7 @@ const Hero = ({ onSeePopulationsClick }: HeroProps) => {
               </button>
             </div>
             {suggestions.length > 0 && (
-              <ul className="absolute left-0 right-0 bg-white text-black rounded-md shadow-md mt-2">
+              <ul className="absolute left-0 right-0 bg-white text-black rounded-md shadow-md mt-2 z-10">
                 {suggestions.map((suggestion, index) => (
                   <li
                     key={index}

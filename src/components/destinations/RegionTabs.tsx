@@ -8,11 +8,17 @@ interface RegionTabsProps {
   activeRegion: string;
   onRegionChange: (region: string) => void;
   destinations: Destination[];
+  searchQuery?: string | null;
 }
 
-const RegionTabs = ({ activeRegion, onRegionChange, destinations }: RegionTabsProps) => {
+const RegionTabs = ({ activeRegion, onRegionChange, destinations, searchQuery }: RegionTabsProps) => {
+  // Filter destinations based on search query if one exists
+  const filteredDestinations = searchQuery
+    ? destinations.filter(d => d.name.toLowerCase() === searchQuery.toLowerCase())
+    : destinations;
+
   return (
-    <Tabs defaultValue={activeRegion} className="mb-8" onValueChange={onRegionChange}>
+    <Tabs defaultValue={activeRegion} value={activeRegion} className="mb-8" onValueChange={onRegionChange}>
       <TabsList className="mb-6">
         <TabsTrigger 
           value="all"
@@ -42,19 +48,19 @@ const RegionTabs = ({ activeRegion, onRegionChange, destinations }: RegionTabsPr
       </TabsList>
       
       <TabsContent value="all">
-        <DestinationGrid destinations={destinations} region="all" />
+        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="all" />
       </TabsContent>
       
       <TabsContent value="North America">
-        <DestinationGrid destinations={destinations} region="North America" />
+        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="North America" />
       </TabsContent>
       
       <TabsContent value="Europe">
-        <DestinationGrid destinations={destinations} region="Europe" />
+        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="Europe" />
       </TabsContent>
       
       <TabsContent value="Asia">
-        <DestinationGrid destinations={destinations} region="Asia" />
+        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="Asia" />
       </TabsContent>
     </Tabs>
   );

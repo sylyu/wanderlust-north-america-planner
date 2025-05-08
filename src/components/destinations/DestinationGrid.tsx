@@ -8,10 +8,28 @@ interface DestinationGridProps {
 }
 
 const DestinationGrid = ({ destinations, region }: DestinationGridProps) => {
-  // Filter destinations based on region if not "all"
-  const filteredDestinations = region === "all" 
-    ? destinations 
-    : destinations.filter(dest => dest.region === region);
+  // Define sun destinations (places with beaches, warm climate)
+  const sunDestinations = ["Cancun", "Maui", "Jamaica"];
+  
+  // Define snow destinations (places with winter activities, cold climate)
+  const snowDestinations = ["Vancouver"];
+  
+  // Filter destinations based on region
+  let filteredDestinations = destinations;
+  
+  if (region === "sun") {
+    filteredDestinations = destinations.filter(dest => 
+      sunDestinations.includes(dest.name)
+    );
+  } else if (region === "snow") {
+    filteredDestinations = destinations.filter(dest => 
+      snowDestinations.includes(dest.name)
+    );
+  } else if (region !== "all") {
+    filteredDestinations = destinations.filter(dest => 
+      dest.region === region
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

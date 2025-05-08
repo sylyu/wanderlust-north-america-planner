@@ -1,6 +1,6 @@
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Globe } from "lucide-react";
+import { Globe, Sun, Snowflake } from "lucide-react";
 import DestinationGrid from "./DestinationGrid";
 import { type Destination } from "./DestinationCard";
 
@@ -19,31 +19,45 @@ const RegionTabs = ({ activeRegion, onRegionChange, destinations, searchQuery }:
 
   return (
     <Tabs defaultValue={activeRegion} value={activeRegion} className="mb-8" onValueChange={onRegionChange}>
-      <TabsList className="mb-6">
+      <TabsList className="mb-6 w-full flex justify-between">
         <TabsTrigger 
           value="all"
-          className="data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
+          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
         >
           <Globe className="mr-2 h-4 w-4" />
           All Regions
         </TabsTrigger>
         <TabsTrigger 
           value="North America"
-          className="data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
+          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
         >
           North America
         </TabsTrigger>
         <TabsTrigger 
           value="Europe"
-          className="data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
+          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
         >
           Europe
         </TabsTrigger>
         <TabsTrigger 
           value="Asia"
-          className="data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
+          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
         >
           Asia
+        </TabsTrigger>
+        <TabsTrigger 
+          value="sun"
+          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
+        >
+          <Sun className="mr-2 h-4 w-4" />
+          Sun
+        </TabsTrigger>
+        <TabsTrigger 
+          value="snow"
+          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
+        >
+          <Snowflake className="mr-2 h-4 w-4" />
+          Snow
         </TabsTrigger>
       </TabsList>
       
@@ -61,6 +75,14 @@ const RegionTabs = ({ activeRegion, onRegionChange, destinations, searchQuery }:
       
       <TabsContent value="Asia">
         <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="Asia" />
+      </TabsContent>
+
+      <TabsContent value="sun">
+        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="sun" />
+      </TabsContent>
+
+      <TabsContent value="snow">
+        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="snow" />
       </TabsContent>
     </Tabs>
   );

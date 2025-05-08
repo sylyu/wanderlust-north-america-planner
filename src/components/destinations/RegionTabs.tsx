@@ -1,6 +1,6 @@
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Globe, Sun, Snowflake } from "lucide-react";
+import { Globe, MapPin, Building, City, Landmark } from "lucide-react";
 import DestinationGrid from "./DestinationGrid";
 import { type Destination } from "./DestinationCard";
 
@@ -25,39 +25,42 @@ const RegionTabs = ({ activeRegion, onRegionChange, destinations, searchQuery }:
           className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
         >
           <Globe className="mr-2 h-4 w-4" />
-          All Regions
+          All Destinations
         </TabsTrigger>
         <TabsTrigger 
-          value="North America"
+          value="east-asia"
           className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
         >
+          <City className="mr-2 h-4 w-4" />
+          East Asia
+        </TabsTrigger>
+        <TabsTrigger 
+          value="western-europe"
+          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
+        >
+          <Landmark className="mr-2 h-4 w-4" />
+          Western Europe
+        </TabsTrigger>
+        <TabsTrigger 
+          value="caribbean"
+          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
+        >
+          <MapPin className="mr-2 h-4 w-4" />
+          Caribbean
+        </TabsTrigger>
+        <TabsTrigger 
+          value="pacific"
+          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
+        >
+          <Building className="mr-2 h-4 w-4" />
+          Pacific Islands
+        </TabsTrigger>
+        <TabsTrigger 
+          value="north-america"
+          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
+        >
+          <MapPin className="mr-2 h-4 w-4" />
           North America
-        </TabsTrigger>
-        <TabsTrigger 
-          value="Europe"
-          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
-        >
-          Europe
-        </TabsTrigger>
-        <TabsTrigger 
-          value="Asia"
-          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
-        >
-          Asia
-        </TabsTrigger>
-        <TabsTrigger 
-          value="sun"
-          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
-        >
-          <Sun className="mr-2 h-4 w-4" />
-          Sun
-        </TabsTrigger>
-        <TabsTrigger 
-          value="snow"
-          className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
-        >
-          <Snowflake className="mr-2 h-4 w-4" />
-          Snow
         </TabsTrigger>
       </TabsList>
       
@@ -65,24 +68,24 @@ const RegionTabs = ({ activeRegion, onRegionChange, destinations, searchQuery }:
         <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="all" />
       </TabsContent>
       
-      <TabsContent value="North America">
-        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="North America" />
+      <TabsContent value="east-asia">
+        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="east-asia" />
       </TabsContent>
       
-      <TabsContent value="Europe">
-        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="Europe" />
+      <TabsContent value="western-europe">
+        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="western-europe" />
       </TabsContent>
       
-      <TabsContent value="Asia">
-        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="Asia" />
+      <TabsContent value="caribbean">
+        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="caribbean" />
       </TabsContent>
 
-      <TabsContent value="sun">
-        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="sun" />
+      <TabsContent value="pacific">
+        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="pacific" />
       </TabsContent>
 
-      <TabsContent value="snow">
-        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="snow" />
+      <TabsContent value="north-america">
+        <DestinationGrid destinations={searchQuery ? filteredDestinations : destinations} region="north-america" />
       </TabsContent>
     </Tabs>
   );

@@ -8,24 +8,38 @@ interface DestinationGridProps {
 }
 
 const DestinationGrid = ({ destinations, region }: DestinationGridProps) => {
-  // Define sun destinations (places with beaches, warm climate)
-  const sunDestinations = ["Cancun", "Maui", "Jamaica"];
-  
-  // Define snow destinations (places with winter activities, cold climate)
-  const snowDestinations = ["Vancouver"];
+  // Define regional categories with specific destinations
+  const eastAsiaDestinations = ["Japan", "South Korea", "China"];
+  const westernEuropeDestinations = ["London", "France", "Italy"];
+  const caribbeanDestinations = ["Jamaica", "Cancun"];
+  const pacificDestinations = ["Maui"];
+  const northAmericaDestinations = ["Vancouver"];
   
   // Filter destinations based on region
   let filteredDestinations = destinations;
   
-  if (region === "sun") {
+  if (region === "east-asia") {
     filteredDestinations = destinations.filter(dest => 
-      sunDestinations.includes(dest.name)
+      eastAsiaDestinations.includes(dest.name)
     );
-  } else if (region === "snow") {
+  } else if (region === "western-europe") {
     filteredDestinations = destinations.filter(dest => 
-      snowDestinations.includes(dest.name)
+      westernEuropeDestinations.includes(dest.name)
+    );
+  } else if (region === "caribbean") {
+    filteredDestinations = destinations.filter(dest => 
+      caribbeanDestinations.includes(dest.name)
+    );
+  } else if (region === "pacific") {
+    filteredDestinations = destinations.filter(dest => 
+      pacificDestinations.includes(dest.name)
+    );
+  } else if (region === "north-america") {
+    filteredDestinations = destinations.filter(dest => 
+      northAmericaDestinations.includes(dest.name)
     );
   } else if (region !== "all") {
+    // Fallback for any regions that might still use the original region property
     filteredDestinations = destinations.filter(dest => 
       dest.region === region
     );

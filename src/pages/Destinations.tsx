@@ -28,20 +28,16 @@ const Destinations = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <div className="flex-grow">
-        <div className="bg-wanderlust-blue py-20 px-4">
-          <div className="container mx-auto max-w-screen-xl">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              {searchQuery ? `Discover ${searchQuery}` : "Favorite Destinations"}
-            </h1>
-            <p className="text-xl text-white/90 max-w-2xl">
-              {searchQuery
-                ? `Explore vacation packages and group tours to ${searchQuery}`
-                : "Explore our most popular destinations for unforgettable group trips and adventures."}
-            </p>
-          </div>
-        </div>
-        
         <div className="container mx-auto max-w-screen-xl py-12 px-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-wanderlust-charcoal mb-4">
+            {searchQuery ? `Discover ${searchQuery}` : "Favorite Destinations"}
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mb-8">
+            {searchQuery
+              ? `Explore vacation packages and group tours to ${searchQuery}`
+              : "Explore our most popular destinations for unforgettable group trips and adventures."}
+          </p>
+          
           <RegionTabs 
             activeRegion={activeRegion} 
             onRegionChange={setActiveRegion}

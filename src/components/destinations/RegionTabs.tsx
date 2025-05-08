@@ -1,6 +1,5 @@
-
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Globe, MapPin, Building, City, Landmark } from "lucide-react";
+import { Globe, MapPin, Building, Landmark } from "lucide-react";
 import DestinationGrid from "./DestinationGrid";
 import { type Destination } from "./DestinationCard";
 
@@ -31,7 +30,7 @@ const RegionTabs = ({ activeRegion, onRegionChange, destinations, searchQuery }:
           value="east-asia"
           className="flex-1 data-[state=active]:bg-wanderlust-blue data-[state=active]:text-white"
         >
-          <City className="mr-2 h-4 w-4" />
+          <Building className="mr-2 h-4 w-4" />
           East Asia
         </TabsTrigger>
         <TabsTrigger 

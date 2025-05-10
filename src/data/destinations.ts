@@ -79,5 +79,21 @@ export const destinations = [
     description: "Brazil's largest international airport and gateway to South America",
     region: "South America",
     rating: 4.2,
+  },
+  {
+    id: 11,
+    name: "Auckland International",
+    image: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?q=80&w=1000&auto=format&fit=crop",
+    description: "New Zealand's largest airport serving as the gateway to the country",
+    region: "Oceania",
+    rating: 4.5,
+  },
+  {
+    id: 12,
+    name: "Nadi International",
+    image: "https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1000&auto=format&fit=crop",
+    description: "Fiji's main international airport and gateway to Pacific paradise islands",
+    region: "Oceania",
+    rating: 4.3,
   }
 ];

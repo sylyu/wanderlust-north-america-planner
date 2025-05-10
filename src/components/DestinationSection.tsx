@@ -1,9 +1,15 @@
-
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
 
 const destinations = [
   {
@@ -66,31 +72,17 @@ const DestinationSection = () => {
             <p className="text-gray-600">Perfect locations for group gatherings</p>
           </div>
           
-          <div className="mt-4 md:mt-0 flex space-x-2">
-            <Button 
-              variant={sortBy === "recommended" ? "default" : "outline"}
-              className={sortBy === "recommended" ? "bg-wanderlust-blue text-white" : ""}
-              onClick={() => setSortBy("recommended")}
-              size="sm"
-            >
-              Recommended
-            </Button>
-            <Button 
-              variant={sortBy === "rating" ? "default" : "outline"}
-              className={sortBy === "rating" ? "bg-wanderlust-blue text-white" : ""}
-              onClick={() => setSortBy("rating")}
-              size="sm"
-            >
-              Top Rated
-            </Button>
-            <Button 
-              variant={sortBy === "price" ? "default" : "outline"}
-              className={sortBy === "price" ? "bg-wanderlust-blue text-white" : ""}
-              onClick={() => setSortBy("price")}
-              size="sm"
-            >
-              Price
-            </Button>
+          <div className="mt-4 md:mt-0 w-full md:w-48">
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="recommended">Recommended</SelectItem>
+                <SelectItem value="rating">Top Rated</SelectItem>
+                <SelectItem value="price">Price</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
 

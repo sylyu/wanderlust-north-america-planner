@@ -19,7 +19,7 @@ export const destinations = [
   {
     id: 3,
     name: "Singapore Changi",
-    image: "https://images.unsplash.com/photo-1594571302764-d079b35e1cf0?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1000&auto=format&fit=crop",
     description: "Award-winning airport with gardens, waterfall and entertainment",
     region: "Asia",
     rating: 4.9,
@@ -35,7 +35,7 @@ export const destinations = [
   {
     id: 5,
     name: "Tokyo Haneda",
-    image: "https://images.unsplash.com/photo-1526915412902-f76a3b8e994f?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?q=80&w=1000&auto=format&fit=crop",
     description: "Modern airport offering convenient access to downtown Tokyo",
     region: "Asia",
     rating: 4.7,
@@ -67,7 +67,7 @@ export const destinations = [
   {
     id: 9,
     name: "Doha Hamad International",
-    image: "https://images.unsplash.com/photo-1611329532992-0b7b53df6b86?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1466442929976-97f336a657be?q=80&w=1000&auto=format&fit=crop",
     description: "Qatar's ultra-modern hub featuring iconic art installations",
     region: "Middle East",
     rating: 4.8,
@@ -75,7 +75,7 @@ export const destinations = [
   {
     id: 10,
     name: "São Paulo Guarulhos",
-    image: "https://images.unsplash.com/photo-1579541998825-dfa101fd8c75?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1473177104440-ffee2f376098?q=80&w=1000&auto=format&fit=crop",
     description: "Brazil's largest international airport and gateway to South America",
     region: "South America",
     rating: 4.2,

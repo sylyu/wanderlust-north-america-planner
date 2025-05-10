@@ -75,7 +75,7 @@ export const destinations = [
   {
     id: 10,
     name: "Jamaica",
-    image: "https://images.unsplash.com/photo-1580431211334-c26918b3199f?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?q=80&w=1000&auto=format&fit=crop",
     description: "Tropical paradise with vibrant culture and reggae music",
     region: "North America",
     rating: 4.8,

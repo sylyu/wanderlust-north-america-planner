@@ -1,6 +1,6 @@
-
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -141,23 +141,23 @@ const PackageDialog = ({ destination, open, onOpenChange }: PackageDialogProps) 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[600px] max-h-[80vh] p-0">
+        <DialogHeader className="px-6 pt-6">
           <DialogTitle className="flex items-center gap-2 text-2xl">
             <Plane className="h-6 w-6" />
             Explore Package: {destination.name}
           </DialogTitle>
         </DialogHeader>
         
-        <div className="grid gap-6 py-4">
-          {/* Flight Selection */}
-          <div>
-            <h3 className="font-medium text-lg mb-3 flex items-center gap-2">
-              <Plane className="h-5 w-5" />
-              Select Flight
-            </h3>
-            
-            <div className="grid grid-cols-2 gap-4 mb-4">
+        <ScrollArea className="px-6 max-h-[calc(80vh-130px)] overflow-y-auto">
+          <div className="grid gap-6 py-4">
+            {/* Flight Selection */}
+            <div>
+              <h3 className="font-medium text-lg mb-3 flex items-center gap-2">
+                <Plane className="h-5 w-5" />
+                Select Flight
+              </h3>
+              
               {/* Departure Date */}
               <div>
                 <Label>Departure Date</Label>
@@ -220,7 +220,7 @@ const PackageDialog = ({ destination, open, onOpenChange }: PackageDialogProps) 
                 </Popover>
               </div>
             </div>
-
+            
             {/* Updated Passengers Section with Age Separation */}
             <div className="mb-6 border border-gray-200 rounded-lg p-4">
               <h4 className="font-medium mb-3">Passengers</h4>
@@ -345,48 +345,9 @@ const PackageDialog = ({ destination, open, onOpenChange }: PackageDialogProps) 
               )}
             </div>
           </div>
-
-          {/* Additional Options */}
-          <div>
-            <h3 className="font-medium text-lg mb-3">Additional Options</h3>
-            
-            {/* Hotel Option */}
-            <div className="flex items-start space-x-3 mb-4 p-4 rounded-lg border border-gray-200">
-              <Checkbox 
-                id="hotel" 
-                checked={includeHotel} 
-                onCheckedChange={(checked) => setIncludeHotel(checked === true)}
-              />
-              <div className="grid gap-1.5">
-                <Label htmlFor="hotel" className="flex items-center gap-2 text-base font-medium">
-                  <Hotel className="h-5 w-5" /> Include Hotel
-                </Label>
-                <p className="text-sm text-muted-foreground">
-                  Add hotel accommodations to your travel package
-                </p>
-              </div>
-            </div>
-            
-            {/* Car Rental Option */}
-            <div className="flex items-start space-x-3 p-4 rounded-lg border border-gray-200">
-              <Checkbox 
-                id="car" 
-                checked={includeCar} 
-                onCheckedChange={(checked) => setIncludeCar(checked === true)} 
-              />
-              <div className="grid gap-1.5">
-                <Label htmlFor="car" className="flex items-center gap-2 text-base font-medium">
-                  <Car className="h-5 w-5" /> Include Car Rental
-                </Label>
-                <p className="text-sm text-muted-foreground">
-                  Add a rental car to your travel package for local transportation
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        </ScrollArea>
         
-        <DialogFooter>
+        <DialogFooter className="px-6 pb-6 pt-2">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>

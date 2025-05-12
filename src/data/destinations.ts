@@ -2,7 +2,7 @@
 export const destinations = [
   {
     id: 1,
-    name: "London Heathrow",
+    name: "London - Heathrow Airport",
     image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=1000&auto=format&fit=crop",
     description: "One of Europe's busiest international airports serving London",
     region: "Europe",
@@ -10,7 +10,7 @@ export const destinations = [
   },
   {
     id: 2,
-    name: "Dubai International",
+    name: "Dubai - International Airport",
     image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1000&auto=format&fit=crop",
     description: "Major hub connecting East and West with luxurious facilities",
     region: "Middle East",
@@ -18,7 +18,7 @@ export const destinations = [
   },
   {
     id: 3,
-    name: "Singapore Changi",
+    name: "Singapore - Changi Airport",
     image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1000&auto=format&fit=crop",
     description: "Award-winning airport with gardens, waterfall and entertainment",
     region: "Asia",
@@ -26,7 +26,7 @@ export const destinations = [
   },
   {
     id: 4,
-    name: "JFK International",
+    name: "New York - JFK Airport",
     image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1000&auto=format&fit=crop",
     description: "New York's premier international gateway to the United States",
     region: "North America",
@@ -34,7 +34,7 @@ export const destinations = [
   },
   {
     id: 5,
-    name: "Tokyo Haneda",
+    name: "Tokyo - Haneda Airport",
     image: "https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?q=80&w=1000&auto=format&fit=crop",
     description: "Modern airport offering convenient access to downtown Tokyo",
     region: "Asia",
@@ -42,7 +42,7 @@ export const destinations = [
   },
   {
     id: 6,
-    name: "Sydney Kingsford Smith",
+    name: "Sydney - Kingsford Smith Airport",
     image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=1000&auto=format&fit=crop",
     description: "Australia's largest airport with views of the Sydney Harbor",
     region: "Oceania",
@@ -50,7 +50,7 @@ export const destinations = [
   },
   {
     id: 7,
-    name: "Amsterdam Schiphol",
+    name: "Amsterdam - Schiphol Airport",
     image: "https://images.unsplash.com/photo-1558679928-be7e02981a07?q=80&w=1000&auto=format&fit=crop",
     description: "Major European hub known for efficiency and Dutch design",
     region: "Europe",
@@ -58,7 +58,7 @@ export const destinations = [
   },
   {
     id: 8,
-    name: "Hong Kong International",
+    name: "Hong Kong - International Airport",
     image: "https://images.unsplash.com/photo-1519677100203-a0e668c92439?q=80&w=1000&auto=format&fit=crop",
     description: "Gateway to Asia built on reclaimed land with impressive architecture",
     region: "Asia",
@@ -66,7 +66,7 @@ export const destinations = [
   },
   {
     id: 9,
-    name: "Doha Hamad International",
+    name: "Doha - Hamad International Airport",
     image: "https://images.unsplash.com/photo-1466442929976-97f336a657be?q=80&w=1000&auto=format&fit=crop",
     description: "Qatar's ultra-modern hub featuring iconic art installations",
     region: "Middle East",
@@ -74,7 +74,7 @@ export const destinations = [
   },
   {
     id: 10,
-    name: "São Paulo Guarulhos",
+    name: "São Paulo - Guarulhos Airport",
     image: "https://images.unsplash.com/photo-1473177104440-ffee2f376098?q=80&w=1000&auto=format&fit=crop",
     description: "Brazil's largest international airport and gateway to South America",
     region: "South America",
@@ -82,7 +82,7 @@ export const destinations = [
   },
   {
     id: 11,
-    name: "Auckland International",
+    name: "Auckland - International Airport",
     image: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?q=80&w=1000&auto=format&fit=crop",
     description: "New Zealand's largest airport serving as the gateway to the country",
     region: "Oceania",
@@ -90,7 +90,7 @@ export const destinations = [
   },
   {
     id: 12,
-    name: "Nadi International",
+    name: "Nadi - International Airport",
     image: "https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1000&auto=format&fit=crop",
     description: "Fiji's main international airport and gateway to Pacific paradise islands",
     region: "Oceania",

@@ -46,15 +46,17 @@ const Hero = ({ onSeePopulationsClick }: HeroProps) => {
   };
 
   const searchDestination = (searchTerm: string) => {
-    // Find the destination that matches the search term
+    // Find the destination that matches the search term or by partial city name
     const foundDestination = destinations.find(
-      (dest) => dest.name.toLowerCase() === searchTerm.toLowerCase()
+      (dest) => 
+        dest.name.toLowerCase() === searchTerm.toLowerCase() ||
+        dest.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     if (foundDestination) {
       toast.success(`Found "${foundDestination.name}"! Redirecting...`);
       // Navigate to the destinations page with a search parameter
-      navigate(`/destinations?search=${encodeURIComponent(searchTerm)}`);
+      navigate(`/destinations?search=${encodeURIComponent(foundDestination.name)}`);
     } else {
       toast.error("Destination not found. Please try a different location.");
     }
@@ -92,7 +94,7 @@ const Hero = ({ onSeePopulationsClick }: HeroProps) => {
             <div className="relative">
               <input
                 type="text"
-                placeholder="Enter a destination"
+                placeholder="Enter a city or airport"
                 value={location}
                 onChange={handleInputChange}
                 ref={searchInputRef}

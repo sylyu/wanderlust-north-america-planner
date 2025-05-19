@@ -5,11 +5,14 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import RegionTabs from "../components/destinations/RegionTabs";
 import { destinations } from "../data/destinations";
+import PackageDialog from "../components/destinations/PackageDialog";
 
 const Destinations = () => {
   const [activeRegion, setActiveRegion] = useState<string>("all");
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get("search");
+  const [selectedDestination, setSelectedDestination] = useState<typeof destinations[0] | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   // If there's a search query, find its region and set it as active
   useEffect(() => {
@@ -20,6 +23,8 @@ const Destinations = () => {
       
       if (foundDestination) {
         setActiveRegion(foundDestination.region);
+        setSelectedDestination(foundDestination);
+        setDialogOpen(true);
       }
     }
   }, [searchQuery]);
@@ -47,6 +52,14 @@ const Destinations = () => {
         </div>
       </div>
       <Footer />
+
+      {selectedDestination && (
+        <PackageDialog
+          destination={selectedDestination}
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+        />
+      )}
     </div>
   );
 };

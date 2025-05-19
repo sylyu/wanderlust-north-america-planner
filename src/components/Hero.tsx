@@ -37,6 +37,14 @@ const Hero = ({ onSeePopulationsClick }: HeroProps) => {
   const handleSuggestionClick = (suggestion: string) => {
     setLocation(suggestion);
     setSuggestions([]);
+    // Auto-search when clicking a suggestion
+    const foundDestination = destinations.find(
+      (dest) => dest.name.toLowerCase() === suggestion.toLowerCase()
+    );
+    
+    if (foundDestination) {
+      searchDestination(suggestion);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {

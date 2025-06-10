@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -26,7 +27,7 @@ interface FlightOption {
   departureTime: string;
   arrivalTime: string;
   price: number;
-  childPrice: number; // Added child price
+  childPrice: number;
 }
 
 // Mock data - in a real app, this would come from an API
@@ -37,7 +38,7 @@ const mockFlights: FlightOption[] = [
     departureTime: "08:00 AM",
     arrivalTime: "10:30 AM",
     price: 299,
-    childPrice: 199, // Child price (approximately 33% discount)
+    childPrice: 199,
   },
   {
     id: "f2",
@@ -45,7 +46,7 @@ const mockFlights: FlightOption[] = [
     departureTime: "12:15 PM",
     arrivalTime: "02:45 PM",
     price: 349,
-    childPrice: 239, // Child price (approximately 32% discount)
+    childPrice: 239,
   },
   {
     id: "f3",
@@ -53,7 +54,7 @@ const mockFlights: FlightOption[] = [
     departureTime: "05:30 PM",
     arrivalTime: "08:00 PM",
     price: 279,
-    childPrice: 189, // Child price (approximately 32% discount)
+    childPrice: 189,
   },
 ];
 
@@ -159,7 +160,7 @@ const PackageDialog = ({ destination, open, onOpenChange }: PackageDialogProps) 
               </h3>
               
               {/* Departure Date */}
-              <div>
+              <div className="mb-4">
                 <Label>Departure Date</Label>
                 <Popover open={departureDateOpen} onOpenChange={setDepartureDateOpen}>
                   <PopoverTrigger asChild>
@@ -190,7 +191,7 @@ const PackageDialog = ({ destination, open, onOpenChange }: PackageDialogProps) 
               </div>
               
               {/* Return Date */}
-              <div>
+              <div className="mb-4">
                 <Label>Return Date</Label>
                 <Popover open={returnDateOpen} onOpenChange={setReturnDateOpen}>
                   <PopoverTrigger asChild>
@@ -219,10 +220,68 @@ const PackageDialog = ({ destination, open, onOpenChange }: PackageDialogProps) 
                   </PopoverContent>
                 </Popover>
               </div>
+
+              {/* Available Flights */}
+              <div className="mb-4">
+                <Label className="mb-3 block font-medium">Available Flights</Label>
+                <RadioGroup 
+                  value={selectedFlight || ""} 
+                  onValueChange={setSelectedFlight}
+                  className="space-y-3"
+                >
+                  {mockFlights.map((flight) => (
+                    <div 
+                      key={flight.id} 
+                      className={cn(
+                        "flex items-center justify-between p-4 rounded-lg border cursor-pointer",
+                        selectedFlight === flight.id ? "border-wanderlust-blue bg-blue-50" : "border-gray-200 hover:border-gray-300"
+                      )}
+                      onClick={() => setSelectedFlight(flight.id)}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <RadioGroupItem value={flight.id} id={flight.id} />
+                        <div>
+                          <Label htmlFor={flight.id} className="text-base cursor-pointer">{flight.airline}</Label>
+                          <p className="text-sm text-gray-500">
+                            {flight.departureTime} - {flight.arrivalTime}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-medium">${flight.price} <span className="text-xs text-gray-500">/ adult</span></div>
+                        <div className="text-sm text-gray-600">${flight.childPrice} <span className="text-xs text-gray-500">/ child</span></div>
+                      </div>
+                    </div>
+                  ))}
+                </RadioGroup>
+                
+                {selectedFlight && (adultPassengers > 0 || childPassengers > 0) && (
+                  <div className="mt-4 p-3 bg-blue-50 border border-blue-100 rounded-md">
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">Total Flight Cost:</span>
+                      <span className="font-bold text-lg">${calculateTotalPrice()}</span>
+                    </div>
+                    <div className="text-sm text-gray-600 mt-1">
+                      {adultPassengers > 0 && (
+                        <div className="flex justify-between">
+                          <span>{adultPassengers} × Adult{adultPassengers !== 1 ? "s" : ""}</span>
+                          <span>${mockFlights.find(f => f.id === selectedFlight)?.price || 0} × {adultPassengers}</span>
+                        </div>
+                      )}
+                      {childPassengers > 0 && (
+                        <div className="flex justify-between">
+                          <span>{childPassengers} × Child{childPassengers !== 1 ? "ren" : ""}</span>
+                          <span>${mockFlights.find(f => f.id === selectedFlight)?.childPrice || 0} × {childPassengers}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
             
-            {/* Updated Passengers Section with Age Separation */}
-            <div className="mb-6 border border-gray-200 rounded-lg p-4">
+            {/* Passengers Section */}
+            <div className="border border-gray-200 rounded-lg p-4">
               <h4 className="font-medium mb-3">Passengers</h4>
               
               {/* Adult Passengers */}
@@ -286,63 +345,6 @@ const PackageDialog = ({ destination, open, onOpenChange }: PackageDialogProps) 
                   </Button>
                 </div>
               </div>
-            </div>
-
-            {/* Available Flights */}
-            <div>
-              <Label className="mb-2 block">Available Flights</Label>
-              <RadioGroup 
-                value={selectedFlight || ""} 
-                onValueChange={setSelectedFlight}
-                className="space-y-3"
-              >
-                {mockFlights.map((flight) => (
-                  <div 
-                    key={flight.id} 
-                    className={cn(
-                      "flex items-center justify-between p-4 rounded-lg border",
-                      selectedFlight === flight.id ? "border-wanderlust-blue bg-blue-50" : "border-gray-200"
-                    )}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <RadioGroupItem value={flight.id} id={flight.id} />
-                      <div>
-                        <Label htmlFor={flight.id} className="text-base">{flight.airline}</Label>
-                        <p className="text-sm text-gray-500">
-                          {flight.departureTime} - {flight.arrivalTime}
-                        </p>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="font-medium text-right">${flight.price} <span className="text-xs text-gray-500">/ adult</span></div>
-                      <div className="text-sm text-gray-600">${flight.childPrice} <span className="text-xs text-gray-500">/ child</span></div>
-                    </div>
-                  </div>
-                ))}
-              </RadioGroup>
-              
-              {selectedFlight && (adultPassengers > 0 || childPassengers > 0) && (
-                <div className="mt-4 p-3 bg-blue-50 border border-blue-100 rounded-md">
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium">Total Flight Cost:</span>
-                    <span className="font-bold text-lg">${calculateTotalPrice()}</span>
-                  </div>
-                  <div className="text-sm text-gray-600 mt-1">
-                    {adultPassengers > 0 && (
-                      <div className="flex justify-between">
-                        <span>{adultPassengers} × Adult{adultPassengers !== 1 ? "s" : ""}</span>
-                        <span>${mockFlights.find(f => f.id === selectedFlight)?.price || 0} × {adultPassengers}</span>
-                      </div>
-                    )}
-                    {childPassengers > 0 && (
-                      <div className="flex justify-between">
-                        <span>{childPassengers} × Child{childPassengers !== 1 ? "ren" : ""}</span>
-                        <span>${mockFlights.find(f => f.id === selectedFlight)?.childPrice || 0} × {childPassengers}</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </ScrollArea>

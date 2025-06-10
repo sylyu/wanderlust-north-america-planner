@@ -3,17 +3,12 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Plane, Hotel, Car, Check, UserRound, UserRoundMinus } from "lucide-react";
-import { format } from "date-fns";
+import { Plane, Check } from "lucide-react";
 import { type Destination } from "./DestinationCard";
-import { cn } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
+import DateSelection from "./DateSelection";
+import FlightSelection from "./FlightSelection";
+import PassengerSelection from "./PassengerSelection";
 
 interface PackageDialogProps {
   destination: Destination;
@@ -76,10 +71,6 @@ const PackageDialog = ({ destination, open, onOpenChange }: PackageDialogProps) 
   // Add-ons state
   const [includeHotel, setIncludeHotel] = useState(false);
   const [includeCar, setIncludeCar] = useState(false);
-  
-  // Calendar popover states
-  const [departureDateOpen, setDepartureDateOpen] = useState(false);
-  const [returnDateOpen, setReturnDateOpen] = useState(false);
 
   // Calculate total price based on selected flight and passenger counts
   const calculateTotalPrice = () => {
@@ -159,193 +150,29 @@ const PackageDialog = ({ destination, open, onOpenChange }: PackageDialogProps) 
                 Select Flight
               </h3>
               
-              {/* Departure Date */}
-              <div className="mb-4">
-                <Label>Departure Date</Label>
-                <Popover open={departureDateOpen} onOpenChange={setDepartureDateOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start text-left font-normal mt-1"
-                    >
-                      {departureDate ? (
-                        format(departureDate, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={departureDate}
-                      onSelect={(date) => {
-                        setDepartureDate(date);
-                        setDepartureDateOpen(false);
-                      }}
-                      initialFocus
-                      disabled={(date) => date < new Date()}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-              
-              {/* Return Date */}
-              <div className="mb-4">
-                <Label>Return Date</Label>
-                <Popover open={returnDateOpen} onOpenChange={setReturnDateOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start text-left font-normal mt-1"
-                    >
-                      {returnDate ? (
-                        format(returnDate, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={returnDate}
-                      onSelect={(date) => {
-                        setReturnDate(date);
-                        setReturnDateOpen(false);
-                      }}
-                      initialFocus
-                      disabled={(date) => date < (departureDate || new Date())}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
+              <DateSelection
+                departureDate={departureDate}
+                returnDate={returnDate}
+                onDepartureDateChange={setDepartureDate}
+                onReturnDateChange={setReturnDate}
+              />
 
-              {/* Available Flights */}
-              <div className="mb-4">
-                <Label className="mb-3 block font-medium">Available Flights</Label>
-                <RadioGroup 
-                  value={selectedFlight || ""} 
-                  onValueChange={setSelectedFlight}
-                  className="space-y-3"
-                >
-                  {mockFlights.map((flight) => (
-                    <div 
-                      key={flight.id} 
-                      className={cn(
-                        "flex items-center justify-between p-4 rounded-lg border cursor-pointer",
-                        selectedFlight === flight.id ? "border-wanderlust-blue bg-blue-50" : "border-gray-200 hover:border-gray-300"
-                      )}
-                      onClick={() => setSelectedFlight(flight.id)}
-                    >
-                      <div className="flex items-center space-x-3">
-                        <RadioGroupItem value={flight.id} id={flight.id} />
-                        <div>
-                          <Label htmlFor={flight.id} className="text-base cursor-pointer">{flight.airline}</Label>
-                          <p className="text-sm text-gray-500">
-                            {flight.departureTime} - {flight.arrivalTime}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-medium">${flight.price} <span className="text-xs text-gray-500">/ adult</span></div>
-                        <div className="text-sm text-gray-600">${flight.childPrice} <span className="text-xs text-gray-500">/ child</span></div>
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
-                
-                {selectedFlight && (adultPassengers > 0 || childPassengers > 0) && (
-                  <div className="mt-4 p-3 bg-blue-50 border border-blue-100 rounded-md">
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium">Total Flight Cost:</span>
-                      <span className="font-bold text-lg">${calculateTotalPrice()}</span>
-                    </div>
-                    <div className="text-sm text-gray-600 mt-1">
-                      {adultPassengers > 0 && (
-                        <div className="flex justify-between">
-                          <span>{adultPassengers} × Adult{adultPassengers !== 1 ? "s" : ""}</span>
-                          <span>${mockFlights.find(f => f.id === selectedFlight)?.price || 0} × {adultPassengers}</span>
-                        </div>
-                      )}
-                      {childPassengers > 0 && (
-                        <div className="flex justify-between">
-                          <span>{childPassengers} × Child{childPassengers !== 1 ? "ren" : ""}</span>
-                          <span>${mockFlights.find(f => f.id === selectedFlight)?.childPrice || 0} × {childPassengers}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <FlightSelection
+                flights={mockFlights}
+                selectedFlight={selectedFlight}
+                onFlightSelect={setSelectedFlight}
+                adultPassengers={adultPassengers}
+                childPassengers={childPassengers}
+              />
             </div>
             
             {/* Passengers Section */}
-            <div className="border border-gray-200 rounded-lg p-4">
-              <h4 className="font-medium mb-3">Passengers</h4>
-              
-              {/* Adult Passengers */}
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <UserRound className="h-5 w-5 text-gray-700" />
-                  <div>
-                    <p className="font-medium">Adults</p>
-                    <p className="text-sm text-gray-500">Ages 14+</p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <Button 
-                    size="icon" 
-                    variant="outline"
-                    onClick={() => adultPassengers > 0 && setAdultPassengers(adultPassengers - 1)}
-                    disabled={adultPassengers === 0}
-                    className="h-8 w-8"
-                  >
-                    <UserRoundMinus className="h-4 w-4" />
-                  </Button>
-                  <span className="mx-3 min-w-8 text-center">{adultPassengers}</span>
-                  <Button 
-                    size="icon" 
-                    variant="outline" 
-                    onClick={() => setAdultPassengers(adultPassengers + 1)}
-                    className="h-8 w-8"
-                  >
-                    <UserRound className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-              
-              {/* Child Passengers */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <UserRound className="h-5 w-5 text-gray-700" />
-                  <div>
-                    <p className="font-medium">Children</p>
-                    <p className="text-sm text-gray-500">Ages 0-13</p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <Button 
-                    size="icon" 
-                    variant="outline"
-                    onClick={() => childPassengers > 0 && setChildPassengers(childPassengers - 1)}
-                    disabled={childPassengers === 0}
-                    className="h-8 w-8"
-                  >
-                    <UserRoundMinus className="h-4 w-4" />
-                  </Button>
-                  <span className="mx-3 min-w-8 text-center">{childPassengers}</span>
-                  <Button 
-                    size="icon" 
-                    variant="outline" 
-                    onClick={() => setChildPassengers(childPassengers + 1)}
-                    className="h-8 w-8"
-                  >
-                    <UserRound className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <PassengerSelection
+              adultPassengers={adultPassengers}
+              childPassengers={childPassengers}
+              onAdultPassengersChange={setAdultPassengers}
+              onChildPassengersChange={setChildPassengers}
+            />
           </div>
         </ScrollArea>
         
